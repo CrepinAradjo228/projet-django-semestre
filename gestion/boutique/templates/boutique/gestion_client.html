@@ -1,0 +1,46 @@
+{% extends 'boutique/base.html' %}
+
+{% block content %}
+
+
+
+
+<h3 class="alert alert-info" style="text-align: center;">Liste des Clients</h3>
+<a href="{% url 'ajout_produit' %}">
+    <button class="btn btn-primary mb-3">Ajouter un nouveau client</button>
+
+</a>
+
+<div class="col-md-12">
+   
+    <table class="table table-striped mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nom du Client</th>
+                <th scope="col">Email</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.nom }}</td>
+                <td>{{ client.email }}</td>
+                <td>
+                    <a href="#" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="#" class="btn btn-danger btn-sm">Supprimer</a>
+                    <a href="#" class="btn btn-info btn-sm">Voir mon Panier</a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+    </div>
+    
+</div>
+
+{% endblock %}

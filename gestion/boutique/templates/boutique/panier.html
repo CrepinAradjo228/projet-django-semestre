@@ -1,0 +1,44 @@
+{% extends 'boutique/base.html' %}
+
+{% block content %}
+
+<h3 class="alert alert-info" style="text-align: center;">Votre Panier</h3>
+
+<div class="col-md-12">
+    <table class="table table-striped mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nom du Produit</th>
+                <th scope="col">Prix (FCFA)</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Total (FCFA)</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in produits %}
+            <tr>
+                <td>{{ item.produit.nom }}</td>
+                <td>{{ item.produit.prix }}</td>
+                <td>{{ item.quantite }}</td>
+                <td>{{ item.total_ligne }}</td>
+                <td>
+                    <a href="{% url 'supprimer_du_panier' item.produit.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p class="text-right"><strong>Total du panier : {{ total }} FCFA</strong></p>
+</div>
+
+<a href="{% url 'gestion_produit' %}">
+    <button class="btn btn-primary">Continuer vos achats</button>
+</a>
+
+<a href="{% url 'valider_commande' %}">
+    <button class="btn btn-success">Valider la commande</button>
+</a>
+
+{% endblock %}
+

@@ -1,0 +1,49 @@
+{% extends 'boutique/base.html' %}
+
+{% block content %}
+
+<h3 class="alert alert-info" style="text-align: center;">Liste des Produits</h3>
+
+<!-- Boutons pour ajouter un produit ou une catégorie -->
+<a href="{% url 'ajout_produit' %}">
+    <button class="btn btn-primary mb-3">Ajouter Produit</button>
+</a>
+<a href="{% url 'ajout_categorie' %}">
+    <button class="btn btn-primary mb-3">Ajouter une nouvelle Catégorie</button>
+</a>
+
+<!-- Bouton pour voir le panier -->
+<a href="{% url 'panier' %}">
+    <button class="btn btn-success mb-3">Voir le panier</button>
+</a>
+
+<div class="col-md-12">
+    <table class="table table-striped mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nom du Produit</th>
+                <th scope="col">Prix (FCFA)</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produit in produits %}
+            <tr>
+                <td>{{ produit.nom }}</td>
+                <td>{{ produit.prix }}</td>
+                <td>{{ produit.quantite }}</td>
+                <td>
+                    <!-- Bouton pour ajouter au panier -->
+                    <a href="{% url 'ajouter_au_panier' produit.id %}" class="btn btn-info btn-sm">Ajouter au panier</a>
+                    <!-- Boutons pour modifier et supprimer -->
+                    <a href="{% url 'modifier_produit' produit.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="{% url 'supprimer_produit' produit.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

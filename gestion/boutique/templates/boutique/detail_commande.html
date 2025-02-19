@@ -1,0 +1,45 @@
+{% extends 'boutique/base.html' %}
+
+{% block content %}
+
+<h3 class="alert alert-info" style="text-align: center;">Détails de la Commande {{ commande.id }}</h3>
+
+<div class="col-md-12">
+    <p><strong>Client :</strong> {{ commande.client.nom }}</p>
+    <p><strong>Date de la Commande :</strong> {{ commande.date_commande|date:"d/m/Y H:i" }}</p>
+    <p><strong>Statut :</strong>
+        {% if commande.complete %}
+            <span class="badge badge-success">Terminée</span>
+        {% else %}
+            <span class="badge badge-warning">En cours</span>
+        {% endif %}
+    </p>
+
+    <h4>Produits de la commande :</h4>
+    <table class="table table-striped mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nom du Produit</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Prix Unitaire (FCFA)</th>
+                <th scope="col">Total (FCFA)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ligne in commande.lignecommande_set.all %}
+            <tr>
+                <td>{{ ligne.produit.nom }}</td>
+                <td>{{ ligne.quantite }}</td>
+                <td>{{ ligne.prix_unitaire }}</td>
+                <td>{{ ligne.total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url 'gestion_commande' %}">
+    <button class="btn btn-primary">Retour à la gestion des commandes</button>
+</a>
+
+{% endblock %}

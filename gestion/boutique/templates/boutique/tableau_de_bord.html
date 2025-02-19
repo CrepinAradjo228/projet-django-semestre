@@ -1,0 +1,120 @@
+{% extends 'boutique/base.html' %}
+
+{% block content %}
+
+<h3 class="alert alert-info" style="text-align: center;">Tableau de Bord</h3>
+
+<div class="container">
+    <div class="row">
+        <!-- Graphique des ventes par mois -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Ventes par Mois
+                </div>
+                <div class="card-body">
+                    <canvas id="ventesParMois"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphique des produits les plus vendus -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Produits les Plus Vendus
+                </div>
+                <div class="card-body">
+                    <canvas id="produitsPlusVendus"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Graphique des commandes par statut -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Commandes par Statut
+                </div>
+                <div class="card-body">
+                    <canvas id="commandesParStatut"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts pour les graphiques -->
+<script>
+    // Graphique des ventes par mois
+    const ventesParMoisCtx = document.getElementById('ventesParMois').getContext('2d');
+    new Chart(ventesParMoisCtx, {
+        type: 'line',
+        data: {
+            labels: {{ mois|safe }},
+            datasets: [{
+                label: 'Ventes (FCFA)',
+                data: {{ ventes|safe }},
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Graphique des produits les plus vendus
+    const produitsPlusVendusCtx = document.getElementById('produitsPlusVendus').getContext('2d');
+    new Chart(produitsPlusVendusCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ produits|safe }},
+            datasets: [{
+                label: 'Quantité Vendue',
+                data: {{ quantites|safe }},
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Graphique des commandes par statut
+    const commandesParStatutCtx = document.getElementById('commandesParStatut').getContext('2d');
+    new Chart(commandesParStatutCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ statuts|safe }},
+            datasets: [{
+                label: 'Commandes',
+                data: {{ total_commandes|safe }},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
+{% endblock %}
