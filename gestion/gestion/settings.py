@@ -75,9 +75,14 @@ WSGI_APPLICATION = 'gestion.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'boutique',
+        'USER' : 'postgres',
+        'PASSWORD': 'Cabricit2005',
+        'HOST':'localhost',
+        'PORT': '5432',
     }
+
 }
 
 
