@@ -11,7 +11,7 @@ from .forms import ProduitForm,CategorieForm,ClientForm
 # Create your views here.
 def index(request):
     categories = Categorie.objects.all()
-    return render(request,'new_boutique/index.html',{'categories':categories})
+    return render(request,'boutique/index.html',{'categories':categories})
 
 
 def ajout_produit(request):
@@ -30,12 +30,12 @@ def ajout_produit(request):
 
     # Si la méthode n'est pas POST ou si le formulaire est invalide
     form = ProduitForm()  # Crée un nouveau formulaire
-    return render(request, 'new_boutique/ajout_produit.html', {'form': form, 'categories': categories})
+    return render(request, 'boutique/ajout_produit.html', {'form': form, 'categories': categories})
 
 def gestion_produit(request):
     produits = Produit.objects.all()
     categories = Categorie.objects.all()
-    return render(request, 'new_boutique/gestion_produit.html', {'produits': produits,'categories':categories})
+    return render(request, 'boutique/gestion_produit.html', {'produits': produits,'categories':categories})
 
 
 
@@ -52,7 +52,7 @@ def ajout_categorie(request):
         
     else:
         form = ProduitForm()  # Crée un nouveau formulaire
-        return render(request, 'new_boutique/ajout_categorie.html', {'form': form, 'categories': categories})
+        return render(request, 'boutique/ajout_categorie.html', {'form': form, 'categories': categories})
     
 def supprimer_produit(request, id):
     if request.method == 'GET':
@@ -72,7 +72,7 @@ def modifier_produit(request, produit_id):
     else:
         form = ProduitForm(instance=produit)
 
-    return render(request, 'new_boutique/modifier_produit.html', {'form': form, 'produit': produit})
+    return render(request, 'boutique/modifier_produit.html', {'form': form, 'produit': produit})
 
 
 
@@ -110,7 +110,7 @@ def voir_panier(request):
         })
         total += total_ligne
 
-    return render(request, 'new_boutique/panier.html', {'produits': produits, 'total': total})
+    return render(request, 'boutique/panier.html', {'produits': produits, 'total': total})
 
 def valider_commande(request):
     panier = request.session.get('panier', {})
@@ -151,7 +151,7 @@ def valider_commande(request):
         # Afficher le formulaire vide
         form = ClientForm()
 
-    return render(request, 'new_boutique/valider_commande.html', {'form': form})
+    return render(request, 'boutique/valider_commande.html', {'form': form})
 
 
 
@@ -160,7 +160,7 @@ def gestion_commandes(request):
     categories = Categorie.objects.all()
     # Récupérer toutes les commandes
     commandes = Commande.objects.all().order_by('-date_commande')  # Tri par date décroissante
-    return render(request, 'new_boutique/gestion_commande.html', {'commandes': commandes,'categories':categories})
+    return render(request, 'boutique/gestion_commande.html', {'commandes': commandes,'categories':categories})
 
 
 
@@ -169,7 +169,7 @@ def gestion_commandes(request):
 def detail_commande(request, commande_id):
     # Récupérer la commande par son ID
     commande = get_object_or_404(Commande, id=commande_id)
-    return render(request, 'new_boutique/detail_commande.html', {'commande': commande})
+    return render(request, 'boutique/detail_commande.html', {'commande': commande})
 
 
 
@@ -179,7 +179,7 @@ def detail_commande(request, commande_id):
 
 def detail_facture(request, facture_id):
     facture = get_object_or_404(Facture, id=facture_id)
-    return render(request, 'new_boutique/detail_facture.html', {'facture': facture})
+    return render(request, 'boutique/detail_facture.html', {'facture': facture})
 
 
 
@@ -213,7 +213,7 @@ def gestion_facture(request):
     categories = Categorie.objects.all()
     # Récupérer toutes les factures
     factures = Facture.objects.all().order_by('-date_facture')  # Tri par date décroissante
-    return render(request, 'new_boutique/gestion_facture.html', {'factures': factures,'categories':categories})
+    return render(request, 'boutique/gestion_facture.html', {'factures': factures,'categories':categories})
 
 
 
@@ -249,7 +249,7 @@ def tableau_de_bord(request):
     total_commandes = [statut['total'] for statut in commandes_par_statut]
     categories = Categorie.objects.all()
 
-    return render(request, 'new_boutique/tableau_de_bord.html', {
+    return render(request, 'boutique/tableau_de_bord.html', {
         'mois': mois,
         'ventes': ventes,
         'produits': produits,
