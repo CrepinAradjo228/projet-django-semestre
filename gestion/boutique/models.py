@@ -32,7 +32,7 @@ class Produit(models.Model):
 class Commande(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     date_commande = models.DateTimeField(auto_now_add=True)
-    statut = models.BooleanField(default=False)
+    complete = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Commande {self.id}"
