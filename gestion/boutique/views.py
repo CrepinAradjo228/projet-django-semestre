@@ -8,12 +8,12 @@ from datetime import datetime, timedelta
 from .models import Categorie,Produit,Commande,Facture,LigneCommande
 from django.contrib import messages
 from .forms import ProduitForm,CategorieForm,ClientForm
-# Create your views here.
+# Création de la vue index
 def index(request):
     categories = Categorie.objects.all()
     return render(request,'boutique/index.html',{'categories':categories})
 
-
+# Création de la vue ajout_produit
 def ajout_produit(request):
     categories = Categorie.objects.all()
     if request.method == 'POST':
@@ -32,6 +32,9 @@ def ajout_produit(request):
     form = ProduitForm()  # Crée un nouveau formulaire
     return render(request, 'boutique/ajout_produit.html', {'form': form, 'categories': categories})
 
+
+
+# Création de la vue gestion_produit
 def gestion_produit(request):
     produits = Produit.objects.all()
     categories = Categorie.objects.all()
@@ -39,7 +42,7 @@ def gestion_produit(request):
 
 
 
-    
+# Création de la vue ajout_category    
 def ajout_categorie(request):
     categories = Categorie.objects.all()
     if request.method == 'POST':
@@ -54,13 +57,18 @@ def ajout_categorie(request):
         form = ProduitForm()  # Crée un nouveau formulaire
         return render(request, 'boutique/ajout_categorie.html', {'form': form, 'categories': categories})
     
+
+
+# Création de la vue supprimer_produit    
 def supprimer_produit(request, id):
     if request.method == 'GET':
         Produit.objects.get(id=id).delete()
         return redirect('gestion_produit')
     else:
         return redirect('gestion_produit')
+    
 
+# Création de la vue modifier_produit
 def modifier_produit(request, produit_id):
     produit = get_object_or_404(Produit, id=produit_id)
 
@@ -75,7 +83,7 @@ def modifier_produit(request, produit_id):
     return render(request, 'boutique/modifier_produit.html', {'form': form, 'produit': produit})
 
 
-
+# Création de la vue ajout_au_panier
 def ajouter_au_panier(request, produit_id):
     produit = get_object_or_404(Produit, id=produit_id)
 
@@ -94,7 +102,7 @@ def ajouter_au_panier(request, produit_id):
     return redirect('gestion_produit')
 
 
-
+# Création de la vue voir_panier
 def voir_panier(request):
     panier = request.session.get('panier', {})
     produits = []
@@ -112,6 +120,8 @@ def voir_panier(request):
 
     return render(request, 'boutique/panier.html', {'produits': produits, 'total': total})
 
+
+# Création de la vue valider_commande
 def valider_commande(request):
     panier = request.session.get('panier', {})
     if not panier:
@@ -155,7 +165,7 @@ def valider_commande(request):
 
 
 
-
+# Création de la vue gestion_commandes
 def gestion_commandes(request):
     categories = Categorie.objects.all()
     # Récupérer toutes les commandes
@@ -165,7 +175,7 @@ def gestion_commandes(request):
 
 
 
-
+# Création de la vue detail_commande
 def detail_commande(request, commande_id):
     # Récupérer la commande par son ID
     commande = get_object_or_404(Commande, id=commande_id)
@@ -176,7 +186,7 @@ def detail_commande(request, commande_id):
 
 
 
-
+# Création de la vue detail_commande
 def detail_facture(request, facture_id):
     facture = get_object_or_404(Facture, id=facture_id)
     return render(request, 'boutique/detail_facture.html', {'facture': facture})
@@ -192,7 +202,7 @@ def detail_facture(request, facture_id):
 
 
 
-
+# Création de la vue supprimer_du_panier
 def supprimer_du_panier(request, produit_id):
     # Récupérer le panier depuis la session
     panier = request.session.get('panier', {})
@@ -208,7 +218,7 @@ def supprimer_du_panier(request, produit_id):
     return redirect('voir_panier')
 
 
-
+# Création de la vue gestion de facture
 def gestion_facture(request):
     categories = Categorie.objects.all()
     # Récupérer toutes les factures
@@ -217,7 +227,7 @@ def gestion_facture(request):
 
 
 
-
+# Création de la vue tableau_de_bord
 def tableau_de_bord(request):
     # Statistiques des ventes par mois
     ventes_par_mois = Facture.objects.annotate(
